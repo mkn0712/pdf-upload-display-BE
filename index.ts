@@ -41,15 +41,7 @@ app.post('/upload', upload.array('pdfFiles'), async (req: Request, res: Response
 
     const files = req.files;
     const pdfDocs: IFile[] = [];
-    if (!files) {
-      return res.status(400).json({ error: 'No files were uploaded' });
-    }
-
-    if (!Array.isArray(files)) {
-      return res.status(400).json({ error: 'Invalid request: files must be an array' });
-    }
-
-    if (files.length === 0) {
+    if (!files || !Array.isArray(files) || files.length === 0) {
       return res.status(400).json({ error: 'No files were uploaded' });
     }
     
@@ -89,3 +81,5 @@ app.get('/files', async (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app; 
